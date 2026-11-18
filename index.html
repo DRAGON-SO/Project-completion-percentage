@@ -69,4 +69,135 @@ input[type=range]:focus-visible{box-shadow:0 0 0 4px rgba(47,122,75,.25)}
 <body data-bg="plants">
 <div class="bg" aria-hidden="true">
 <svg style="top:-30px;right:-40px;width:360px;opacity:.55" viewBox="0 0 300 300"><g fill="#3f9a5c"><path d="M20 20C90 10 150 60 160 130 90 140 30 90 20 20Z"/><path d="M120 60C190 40 260 90 270 170 200 180 135 130 120 60Z" fill="#2f7a4b"/><path d="M10 120C70 110 120 160 125 220 65 225 18 180 10 120Z" fill="#58b072"/></g></svg>
-<svg style="top:-20px;left:-50px;width:340px;opacity:.5;transform:scaleX(-1)" viewBox="0 0 300 300"><g fill="#3f9a5c"><path d="M20 20C90 10 150 60 160 130 90 140 30 90 20 20Z"/><path d="M120 60C190 40 260 90 270 170 200 180 135 130 120 60Z" fill="#2f7a4b"
+<svg style="top:-20px;left:-50px;width:340px;opacity:.5;transform:scaleX(-1)" viewBox="0 0 300 300"><g fill="#3f9a5c"><path d="M20 20C90 10 150 60 160 130 90 140 30 90 20 20Z"/><path d="M120 60C190 40 260 90 270 170 200 180 135 130 120 60Z" fill="#2f7a4b"/><path d="M10 120C70 110 120 160 125 220 65 225 18 180 10 120Z" fill="#58b072"/></g></svg>
+<svg style="bottom:0;left:0;width:100%;height:220px;opacity:.7" viewBox="0 0 1200 220" preserveAspectRatio="none"><g fill="#3d8f55"><path d="M0 220V150q10-60 20 0 10-80 25 0 10-50 20 0 12-90 28 0 8-60 22 0 12-70 26 0 10-40 20 0V220Z"/><path d="M300 220V140q10-70 22 0 10-90 28 0 12-60 22 0 10-80 26 0 10-50 20 0V220Z" fill="#2f7a4b"/><path d="M620 220V150q12-80 24 0 10-60 22 0 12-90 28 0 8-60 22 0 10-70 26 0V220Z"/><path d="M900 220V135q10-80 24 0 12-60 22 0 10-100 30 0 10-60 22 0 12-70 26 0 8-40 18 0V220Z" fill="#2f7a4b"/><path d="M0 220H1200V190Q900 160 600 185T0 180Z" fill="#2c6b42"/></g>
+<g fill="#e8b93a"><circle cx="150" cy="120" r="9"/><circle cx="520" cy="130" r="9"/><circle cx="780" cy="118" r="9"/><circle cx="1090" cy="125" r="9"/></g><g fill="#d1503c"><circle cx="360" cy="110" r="8"/><circle cx="960" cy="112" r="8"/></g></svg>
+<svg style="bottom:150px;right:2%;width:150px;opacity:.55" viewBox="0 0 120 200"><rect x="55" y="90" width="10" height="110" fill="#6b4a2b"/><circle cx="60" cy="60" r="50" fill="#3f9a5c"/><circle cx="35" cy="85" r="30" fill="#2f7a4b"/><circle cx="88" cy="82" r="28" fill="#58b072"/></svg>
+<svg style="bottom:150px;left:2%;width:120px;opacity:.5" viewBox="0 0 120 200"><rect x="55" y="100" width="10" height="100" fill="#6b4a2b"/><circle cx="60" cy="65" r="45" fill="#58b072"/><circle cx="38" cy="90" r="28" fill="#3f9a5c"/></svg>
+</div>
+
+<div class="wrap" id="wrap">
+<div class="topbar">
+  <button class="btn" id="print">🖨 طباعة A4</button>
+  <button class="btn" id="pdf">📄 حفظ PDF</button>
+  <label for="bgsel">الخلفية:</label>
+  <select id="bgsel">
+    <option value="plants">🌿 نباتات</option>
+    <option value="white">⚪ بيضاء</option>
+    <option value="sky">☁️ سماوية</option>
+    <option value="sand">🏜 رملية</option>
+    <option value="dusk">🌇 غروب</option>
+    <option value="night">🌑 أخضر داكن</option>
+  </select>
+  <button class="btn alt" id="addtb">＋ مربع نص</button>
+</div>
+<div class="card">
+  <div class="head">
+    <h1 contenteditable="true" spellcheck="false" id="title">نسب الإنجاز</h1>
+    <p contenteditable="true" spellcheck="false" id="subtitle">متابعة سير الأعمال الزراعية</p>
+  </div>
+  <div class="body">
+    <h2 class="sub" contenteditable="true" spellcheck="false" id="sub">تفصيل نسب إنجاز الأعمال</h2>
+    <p class="note" contenteditable="true" spellcheck="false" id="note">اسحب المؤشر الدائري بالماوس أو بالإصبع لتحديث طول الشريط ونسبة الإنجاز مباشرة. يمكنك أيضًا تعديل أي نص أو كتابة النسبة بنفسك.</p>
+    <div id="rows"></div>
+    <div class="tools">
+      <button class="btn" id="add">＋ إضافة شريط جديد</button>
+      <button class="btn alt" id="reset">إعادة الضبط</button>
+      <span class="avg" id="avg"></span>
+    </div>
+  </div>
+  <div class="foot"><span class="leaf">🌿</span> <span class="sig" contenteditable="true" spellcheck="false" id="sig">م / علي عطا أمين</span> <span class="leaf">🌿</span></div>
+</div>
+<div id="boxes"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DEF=[["أعمال الحفر والتسوية",100],["توريد وفرش التربة الزراعية",80],["تجهيز الأحواض الزراعية",75],["تمديد شبكة الري",60],["زراعة الأشجار",50],["زراعة الشجيرات",30],["زراعة الزهور",20]];
+const FONTS=["Cairo","Tajawal","Amiri","Reem Kufi","Noto Naskh Arabic","Roboto","Playfair Display","Arial","Times New Roman","Courier New"];
+const KEY="nisab-alenjaz-v1";
+let S={rows:DEF.map(([t,v])=>({t,v})),title:null,subtitle:null,sub:null,note:null,sig:null,bg:"plants",boxes:[]};
+const $=id=>document.getElementById(id);
+try{const x=localStorage.getItem(KEY);if(x)S=Object.assign(S,JSON.parse(x))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',5000)}
+function col(v){return v>=50?'var(--g)':v>=25?'var(--am)':'var(--rd)'}
+function paint(r,row){
+  const s=row.querySelector('input[type=range]'),n=row.querySelector('.pct input');
+  s.style.setProperty('--v',r.v+'%');s.style.setProperty('--c',col(r.v));
+  s.value=r.v;n.value=r.v;
+}
+function avg(){const a=S.rows.length?Math.round(S.rows.reduce((p,r)=>p+r.v,0)/S.rows.length):0;$('avg').textContent='متوسط الإنجاز: '+a+'%'}
+function render(){
+  const box=$('rows');box.innerHTML='';
+  S.rows.forEach((r,i)=>{
+    const row=document.createElement('div');row.className='row';
+    row.innerHTML='<div class="top"><span class="lbl" contenteditable="true" spellcheck="false"></span><button class="del" title="حذف" aria-label="حذف">✕</button><span class="pct"><input type="number" min="0" max="100"><span>%</span></span></div><input type="range" min="0" max="100" step="1">';
+    row.querySelector('.lbl').textContent=r.t;
+    row.querySelector('.lbl').addEventListener('input',e=>{r.t=e.target.textContent;save()});
+    const set=v=>{v=Math.max(0,Math.min(100,Math.round(+v||0)));r.v=v;paint(r,row);avg();save()};
+    row.querySelector('input[type=range]').addEventListener('input',e=>set(e.target.value));
+    row.querySelector('.pct input').addEventListener('input',e=>{if(e.target.value!=='')set(e.target.value)});
+    row.querySelector('.pct input').addEventListener('blur',()=>paint(r,row));
+    row.querySelector('.del').addEventListener('click',()=>{S.rows.splice(i,1);save();render()});
+    box.appendChild(row);paint(r,row);
+  });
+  avg();
+}
+["title","subtitle","sub","note","sig"].forEach(k=>{
+  const el=$(k);if(S[k]!=null)el.textContent=S[k];
+  el.addEventListener('input',()=>{S[k]=el.textContent;save()});
+});
+$('add').onclick=()=>{S.rows.push({t:'بند جديد',v:0});save();render();const l=document.querySelectorAll('.lbl');const e=l[l.length-1];e.focus();document.getSelection().selectAllChildren(e)};
+$('reset').onclick=()=>{if(confirm('إعادة كل الشرائط إلى الوضع الأصلي؟')){S.rows=DEF.map(([t,v])=>({t,v}));save();render()}};
+
+/* الخلفية */
+function setBg(v){S.bg=v;document.body.dataset.bg=v;$('bgsel').value=v;save()}
+$('bgsel').onchange=e=>setBg(e.target.value);
+setBg(S.bg||'plants');
+
+/* الطباعة */
+function doPrint(){const t=document.title;document.title='نسب الإنجاز';setTimeout(()=>{window.print();document.title=t},50)}
+$('print').onclick=()=>{toast('اختر الطابعة وحجم الورق A4 ثم اطبع');doPrint()};
+$('pdf').onclick=()=>{toast('في نافذة الطباعة اختر الوجهة: حفظ كملف PDF (الورق A4)');doPrint()};
+
+/* مربعات النص */
+function mkBox(B,i){
+  const tb=document.createElement('div');tb.className='tb';
+  tb.innerHTML='<div class="tbar"><span class="drag" title="اسحب لتحريك المربع">✥</span><select class="ff"></select><button class="m" title="تصغير">−</button><input class="fs" type="number" min="8" max="200"><button class="p" title="تكبير">+</button><input class="fc" type="color"><button class="dr" title="اللغة / الاتجاه"></button><button class="x" title="حذف">✕</button></div><div class="txt" contenteditable="true" spellcheck="false"></div>';
+  const q=s=>tb.querySelector(s),txt=q('.txt'),ff=q('.ff'),fs=q('.fs'),fc=q('.fc'),dr=q('.dr');
+  FONTS.forEach(f=>{const o=document.createElement('option');o.value=f;o.textContent=f;o.style.fontFamily=f;ff.appendChild(o)});
+  const apply=()=>{
+    tb.style.left=B.x+'%';tb.style.top=B.y+'px';
+    txt.style.fontFamily="'"+B.ff+"',Cairo,sans-serif";txt.style.fontSize=B.fs+'px';txt.style.color=B.fc;
+    txt.dir=B.dir;txt.lang=B.dir==='rtl'?'ar':'en';txt.style.textAlign=B.dir==='rtl'?'right':'left';
+    ff.value=B.ff;fs.value=B.fs;fc.value=B.fc;dr.textContent=B.dir==='rtl'?'عربي':'EN';
+  };
+  txt.textContent=B.t;apply();
+  txt.addEventListener('input',()=>{B.t=txt.textContent;save()});
+  ff.onchange=()=>{B.ff=ff.value;apply();save()};
+  fs.oninput=()=>{B.fs=Math.max(8,Math.min(200,+fs.value||18));apply();save()};
+  q('.m').onclick=()=>{B.fs=Math.max(8,B.fs-2);apply();save()};
+  q('.p').onclick=()=>{B.fs=Math.min(200,B.fs+2);apply();save()};
+  fc.oninput=()=>{B.fc=fc.value;apply();save()};
+  dr.onclick=()=>{B.dir=B.dir==='rtl'?'ltr':'rtl';apply();save()};
+  q('.x').onclick=()=>{S.boxes.splice(S.boxes.indexOf(B),1);save();tb.remove()};
+  const h=q('.drag');
+  h.addEventListener('pointerdown',e=>{
+    e.preventDefault();h.setPointerCapture(e.pointerId);
+    const w=$('wrap').getBoundingClientRect(),b=tb.getBoundingClientRect(),dx=e.clientX-b.left,dy=e.clientY-b.top;
+    const mv=ev=>{B.x=Math.max(0,Math.min(92,(ev.clientX-dx-w.left)/w.width*100));B.y=Math.max(0,ev.clientY-dy-w.top);tb.style.left=B.x+'%';tb.style.top=B.y+'px'};
+    const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);save()};
+    h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);
+  });
+  $('boxes').appendChild(tb);return txt;
+}
+S.boxes.forEach(mkBox);
+$('addtb').onclick=()=>{
+  const B={t:'اكتب هنا...',x:12+(S.boxes.length%5)*4,y:120+(S.boxes.length%5)*30+window.scrollY,ff:'Cairo',fs:20,fc:'#16301f',dir:'rtl'};
+  S.boxes.push(B);save();const t=mkBox(B);t.focus();document.getSelection().selectAllChildren(t);
+};
+render();
+</script>
+</body>
+</html>
