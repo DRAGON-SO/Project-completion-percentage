@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>نسب الإنجاز</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;700&family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&family=Roboto:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700;800&family=Almarai:wght@400;700;800&family=Amiri:wght@400;700&family=Changa:wght@400;600;700&family=Cairo:wght@400;600;700;800&family=El+Messiri:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Lemonada:wght@400;600;700&family=Mada:wght@400;600;700&family=Markazi+Text:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;700&family=Playfair+Display:wght@400;700&family=Readex+Pro:wght@400;600;700&family=Reem+Kufi:wght@400;700&family=Roboto:wght@400;700&family=Rubik:wght@400;600;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--g:#2f7a4b;--gd:#1d4d31;--am:#d9a42a;--rd:#cf5a3a;--ink:#16301f;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -16,6 +16,17 @@ body[data-bg=sky]{background:linear-gradient(180deg,#cfe9ff,#f3faff)}
 body[data-bg=sand]{background:linear-gradient(180deg,#f3e6c8,#fbf5e6)}
 body[data-bg=dusk]{background:linear-gradient(180deg,#ffd2a0,#fff0dc)}
 body[data-bg=night]{background:linear-gradient(180deg,#0f2a1d,#1d4d31)}
+body[data-bg=lavender]{background:linear-gradient(135deg,#e9ddff,#f8f3ff 55%,#d9c8f4)}
+body[data-bg=rose]{background:linear-gradient(135deg,#ffe0e8,#fff5f7 55%,#f7c6d2)}
+body[data-bg=ocean]{background:linear-gradient(135deg,#b9e6ee,#eafaff 55%,#9bcbdc)}
+body[data-bg=gray]{background:linear-gradient(135deg,#dce1e8,#f7f8fa 55%,#c4ccd6)}
+body[data-bg=peach]{background:linear-gradient(135deg,#ffd9bd,#fff4e9 55%,#f4b995)}
+body[data-bg=mint]{background:linear-gradient(135deg,#c8f0df,#f1fff8 55%,#a8dfc5)}
+body[data-bg=gold]{background:linear-gradient(135deg,#f7e7ad,#fff9e8 55%,#e8cc75)}
+body[data-bg=blue]{background:linear-gradient(135deg,#cbdcff,#f3f7ff 55%,#a9c5f5)}
+body[data-bg=plum]{background:linear-gradient(135deg,#e6d0ec,#fbf4ff 55%,#c9a8d7)}
+body[data-bg=darkblue]{background:linear-gradient(135deg,#102a43,#234e70 55%,#0b1f33)}
+body[data-bg=cream]{background:linear-gradient(135deg,#f7f0df,#fffdf6 55%,#e9dfc7)}
 body:not([data-bg=plants]) .bg{display:none}
 .bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .bg svg{position:absolute}
@@ -52,6 +63,11 @@ input[type=range]:focus-visible{box-shadow:0 0 0 4px rgba(47,122,75,.25)}
 .foot{text-align:center;padding:14px 10px 22px;border-top:1px dashed #b9d3bd;margin:10px 26px 0}
 .sig{display:inline-block;font-weight:800;font-size:19px;color:var(--gd);outline:none;padding:2px 10px;border-radius:8px}
 .leaf{font-size:20px}
+#images{display:grid;gap:12px;margin-top:14px}
+.user-image{position:relative;text-align:center;background:rgba(255,255,255,.75);padding:8px;border-radius:14px;box-shadow:0 5px 18px rgba(0,0,0,.10)}
+.user-image img{display:block;max-width:100%;max-height:620px;object-fit:contain;margin:auto;border-radius:9px}
+.user-image .remove-image{position:absolute;top:12px;left:12px;border:0;border-radius:9px;background:#a83232;color:#fff;padding:6px 10px;font:700 13px 'Cairo',sans-serif;cursor:pointer}
+.image-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .tb{position:absolute;z-index:5;min-width:120px;max-width:92%;border:1.5px dashed rgba(47,122,75,.55);border-radius:8px;background:rgba(255,255,255,.0)}
 .tb .txt{padding:6px 10px;outline:none;white-space:pre-wrap;min-height:1.6em}
 .tbar{display:none;position:absolute;bottom:100%;right:0;margin-bottom:4px;gap:4px;align-items:center;background:#fff;border-radius:10px;padding:5px 6px;box-shadow:0 6px 18px rgba(0,0,0,.25);direction:rtl;white-space:nowrap}
@@ -80,6 +96,8 @@ input[type=range]:focus-visible{box-shadow:0 0 0 4px rgba(47,122,75,.25)}
 <div class="topbar">
   <button class="btn" id="print">🖨 طباعة A4</button>
   <button class="btn" id="pdf">📄 حفظ PDF</button>
+  <button class="btn alt" id="addImage">🖼 إضافة صورة من الجهاز</button>
+  <input id="imageInput" type="file" accept="image/*" multiple hidden>
   <label for="bgsel">الخلفية:</label>
   <select id="bgsel">
     <option value="plants">🌿 نباتات</option>
@@ -88,6 +106,17 @@ input[type=range]:focus-visible{box-shadow:0 0 0 4px rgba(47,122,75,.25)}
     <option value="sand">🏜 رملية</option>
     <option value="dusk">🌇 غروب</option>
     <option value="night">🌑 أخضر داكن</option>
+    <option value="lavender">💜 بنفسجي هادئ</option>
+    <option value="rose">🌸 وردية</option>
+    <option value="ocean">🌊 أزرق بحري</option>
+    <option value="gray">🩶 رمادي أنيق</option>
+    <option value="peach">🍑 خوخي</option>
+    <option value="mint">🍃 نعناعي</option>
+    <option value="gold">✨ ذهبي</option>
+    <option value="blue">💠 أزرق فاتح</option>
+    <option value="plum">🍇 موف</option>
+    <option value="darkblue">🌌 أزرق داكن</option>
+    <option value="cream">🤍 كريمي</option>
   </select>
   <button class="btn alt" id="addtb">＋ مربع نص</button>
 </div>
@@ -108,17 +137,20 @@ input[type=range]:focus-visible{box-shadow:0 0 0 4px rgba(47,122,75,.25)}
   </div>
   <div class="foot"><span class="leaf">🌿</span> <span class="sig" contenteditable="true" spellcheck="false" id="sig">م / علي عطا أمين</span> <span class="leaf">🌿</span></div>
 </div>
+<div id="images"></div>
 <div id="boxes"></div>
 </div>
 <div class="toast" id="toast"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 const DEF=[["أعمال الحفر والتسوية",100],["توريد وفرش التربة الزراعية",80],["تجهيز الأحواض الزراعية",75],["تمديد شبكة الري",60],["زراعة الأشجار",50],["زراعة الشجيرات",30],["زراعة الزهور",20]];
-const FONTS=["Cairo","Tajawal","Amiri","Reem Kufi","Noto Naskh Arabic","Roboto","Playfair Display","Arial","Times New Roman","Courier New"];
+const FONTS=["Cairo","Tajawal","Almarai","Alexandria","Changa","El Messiri","IBM Plex Sans Arabic","Lemonada","Mada","Markazi Text","Readex Pro","Rubik","Amiri","Reem Kufi","Noto Naskh Arabic","Roboto","Playfair Display","Arial","Tahoma","Times New Roman","Courier New"];
 const KEY="nisab-alenjaz-v1";
-let S={rows:DEF.map(([t,v])=>({t,v})),title:null,subtitle:null,sub:null,note:null,sig:null,bg:"plants",boxes:[]};
+let S={rows:DEF.map(([t,v])=>({t,v})),title:null,subtitle:null,sub:null,note:null,sig:null,bg:"plants",boxes:[],images:[]};
 const $=id=>document.getElementById(id);
 try{const x=localStorage.getItem(KEY);if(x)S=Object.assign(S,JSON.parse(x))}catch(e){}
+if(!Array.isArray(S.images))S.images=[];
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',5000)}
 function col(v){return v>=50?'var(--g)':v>=25?'var(--am)':'var(--rd)'}
@@ -156,10 +188,122 @@ function setBg(v){S.bg=v;document.body.dataset.bg=v;$('bgsel').value=v;save()}
 $('bgsel').onchange=e=>setBg(e.target.value);
 setBg(S.bg||'plants');
 
+/* إضافة صور من الجهاز وحفظها ضمن التصميم */
+function renderImages(){
+  const host=$('images');
+  host.innerHTML='';
+  S.images.forEach((src,index)=>{
+    const item=document.createElement('div');
+    item.className='user-image';
+    const img=document.createElement('img');
+    img.src=src;
+    img.alt='صورة مضافة';
+    const del=document.createElement('button');
+    del.className='remove-image';
+    del.type='button';
+    del.textContent='حذف الصورة ✕';
+    del.onclick=()=>{S.images.splice(index,1);save();renderImages()};
+    item.append(img,del);
+    host.appendChild(item);
+  });
+}
+$('addImage').onclick=()=>$('imageInput').click();
+$('imageInput').addEventListener('change',async e=>{
+  const files=Array.from(e.target.files||[]).filter(f=>f.type.startsWith('image/'));
+  if(!files.length)return;
+  for(const file of files){
+    const data=await new Promise((resolve,reject)=>{
+      const reader=new FileReader();
+      reader.onload=()=>{
+        const image=new Image();
+        image.onload=()=>{
+          const maxSide=1800,scale=Math.min(1,maxSide/Math.max(image.width,image.height));
+          const canvas=document.createElement('canvas');
+          canvas.width=Math.round(image.width*scale);
+          canvas.height=Math.round(image.height*scale);
+          const ctx=canvas.getContext('2d');
+          ctx.drawImage(image,0,0,canvas.width,canvas.height);
+          resolve(canvas.toDataURL('image/jpeg',0.84));
+        };
+        image.onerror=reject;
+        image.src=reader.result;
+      };
+      reader.onerror=reject;
+      reader.readAsDataURL(file);
+    });
+    S.images.push(data);
+  }
+  save();
+  renderImages();
+  e.target.value='';
+  toast('تمت إضافة الصورة إلى التصميم. ستظهر أيضًا في ملف PDF.');
+});
+renderImages();
+
 /* الطباعة */
 function doPrint(){const t=document.title;document.title='نسب الإنجاز';setTimeout(()=>{window.print();document.title=t},50)}
 $('print').onclick=()=>{toast('اختر الطابعة وحجم الورق A4 ثم اطبع');doPrint()};
-$('pdf').onclick=()=>{toast('في نافذة الطباعة اختر الوجهة: حفظ كملف PDF (الورق A4)');doPrint()};
+$('pdf').onclick=async()=>{
+  const btn=$('pdf');
+  if(typeof html2pdf==='undefined'){
+    toast('تعذر تحميل أداة إنشاء PDF. تحقق من اتصال الإنترنت ثم أعد المحاولة.');
+    return;
+  }
+  // افتح نافذة المعاينة مباشرة من تفاعل المستخدم لتجنب حظر النوافذ المنبثقة.
+  const preview=window.open('about:blank','_blank');
+  if(!preview){
+    toast('اسمح بفتح النوافذ المنبثقة لهذا الملف ثم أعد المحاولة.');
+    return;
+  }
+  btn.disabled=true;
+  const oldText=btn.textContent;
+  btn.textContent='⏳ جارٍ إنشاء PDF...';
+  const clone=$('wrap').cloneNode(true);
+  clone.querySelector('.topbar')?.remove();
+  clone.querySelector('.tools')?.remove();
+  clone.querySelectorAll('.del,.tbar,.remove-image').forEach(el=>el.remove());
+  clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
+  clone.style.maxWidth='none';
+  clone.style.width='100%';
+  clone.style.padding='0';
+  const holder=document.createElement('div');
+  holder.dir='rtl';
+  holder.style.cssText='position:fixed;left:-10000px;top:0;width:794px;background:#fff;z-index:-1;';
+  holder.appendChild(clone);
+  document.body.appendChild(holder);
+  try{
+    const opt={
+      margin:[8,8,8,8],
+      filename:'نسب-الإنجاز.pdf',
+      image:{type:'jpeg',quality:0.98},
+      html2canvas:{scale:2,useCORS:true,backgroundColor:'#ffffff',logging:false},
+      jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},
+      pagebreak:{mode:['css','legacy']}
+    };
+    const worker=html2pdf().set(opt).from(clone).toPdf();
+    const pdf=await worker.get('pdf');
+    const blob=pdf.output('blob');
+    const url=URL.createObjectURL(blob);
+    // افتح نسخة PDF للمعاينة، ونزّل نسخة على الجهاز.
+    preview.location.href=url;
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='نسب-الإنجاز.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    toast('تم إنشاء ملف PDF وتنزيله وفتحه للمعاينة.');
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+  }catch(err){
+    preview.close();
+    console.error(err);
+    toast('حدث خطأ أثناء إنشاء PDF. حاول مرة أخرى.');
+  }finally{
+    holder.remove();
+    btn.disabled=false;
+    btn.textContent=oldText;
+  }
+};
 
 /* مربعات النص */
 function mkBox(B,i){
